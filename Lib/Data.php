@@ -4,4 +4,5 @@ namespace Flux\Lib;
 
 interface Data {
     static public function fromArray(array $data, ?DataValidator $validator = null): Data;
+    public function insertQuery(string $table): string;
 }

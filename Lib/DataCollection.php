@@ -9,5 +9,17 @@ abstract class DataCollection {
         $this->collection = $data;
     }
 
-    abstract static public function fromData(Data $data...): DataCollection;
+    public function data(): array {
+        return $this->collection;
+    }
+
+    static public function fromData(Data ...$data): DataCollection {
+        $items = array();
+        array_push($items, $data);
+        return new self($items);
+    }
+
+    // Creates a array of data from one or multiple arrays of data. It uses the datafields to
+    // validate the data in each of the arrays in $data.
+    abstract static public function fromArrays(array ...$data, array $datafields): DataCollection;
 }
