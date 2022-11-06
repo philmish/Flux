@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="src/autoload.php"
+         cacheResultFile=".cache/phpunit/test-results"
+         executionOrder="depends,defects"
+         forceCoversAnnotation="true"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         convertDeprecationsToExceptions="true"
+         failOnEmptyTestSuite="false"
+         failOnRisky="true"
+         failOnWarning="true"
+         colors="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="unit">
+            <directory suffix="Test.php">tests/unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <ini name="memory_limit" value="1024M"/>
+    </php>
+
+    <coverage cacheDirectory=".cache/phpunit/coverage"
+              processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <file>src/autoload.php</file>
+        </exclude>
+    </coverage>
+</phpunit>

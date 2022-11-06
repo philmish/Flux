@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Flux\Lib;
+namespace Flux\lib;
 
 abstract class DataCollection {
     protected array $collection;
