@@ -2,9 +2,9 @@
 
 namespace Flux;
 
-use Flux\Lib\DataCollection;
 use Flux\Lib\Executor;
 use PDO;
+use Exception;
 
 final class SQLiteExecutor extends Executor {
     
@@ -13,8 +13,11 @@ final class SQLiteExecutor extends Executor {
        return new self($pdo);
     }
 
-    public function feed(DataCollection $data, string $table) {
-        
+    public function truncate(string $table): void {
+        $result = $this->db->prepare("DELETE FROM $table")->execute();
+        if (!$result) {
+            throw new Exception("Failed to truncate $table");
+        }
     }
 }
 

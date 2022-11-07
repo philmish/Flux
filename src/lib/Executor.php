@@ -41,7 +41,7 @@ abstract class Executor {
     }
 
     public function truncate(string $table): void {
-        $result = $this->db->prepare("TRUNCATE TABLE ?", [$table])->execute();
+        $result = $this->db->prepare("TRUNCATE TABLE $table")->execute();
         if (!$result) {
             throw new Exception("Failed to truncate $table");
         }
