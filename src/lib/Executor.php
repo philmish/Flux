@@ -27,14 +27,17 @@ abstract class Executor {
         foreach ($data->data() as $item) {
             if (!$item instanceof Data) {
                 $this->db->rollBack();
-                throw new Exception("Unexpected data type.");
+                throw new Exception("Unexpected data type. Rolling back previous inserts.");
             }
             try {
                 $stmt = $this->db->prepare($item->insertQuery($table));
                 $stmt->execute();
             } catch (PDOException $e) {
                 $this->db->rollBack();
-                throw new Exception("Encounterd error executing insert.", previous:$e);
+                throw new Exception(
+                    "Encounterd error executing insert. Rolling back previous inserts.", 
+                    previous:$e
+                );
             }
         }
         $this->db->commit();
@@ -47,7 +50,7 @@ abstract class Executor {
         }
     }
 
-    public function execScript(string $source): void { 
+    public function execScript(string $source): int { 
         $sql = file_get_contents($source);
         if (!$sql) {
             //TODO Implement custom exceptions
@@ -55,7 +58,8 @@ abstract class Executor {
         }
         $result = $this->db->exec($sql);
         if (!$result) {
-            throw new Exception("Failed to execute script.");
+            throw new Exception("Script execution failed.");
         }
+        return $result;
     }
 }

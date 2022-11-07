@@ -7,6 +7,14 @@ spl_autoload_register(
         static $classes = null;
         if ($classes === null) {
             $classes = array(
+                'flux\\cli\\app' => '/cli/App.php',
+                'flux\\cli\\command' => '/cli/Commands.php',
+                'flux\\cli\\configuration' => '/cli/Configuration.php',
+                'flux\\cli\\driver' => '/cli/Drivers.php',
+                'flux\\cli\\flags' => '/cli/Flags.php',
+                'flux\\cmd\\command' => '/cmd/Command.php',
+                'flux\\cmd\\execscript' => '/cmd/ExecScript.php',
+                'flux\\cmd\\help' => '/cmd/Help.php',
                 'flux\\lib\\data' => '/lib/Data.php',
                 'flux\\lib\\datacollection' => '/lib/DataCollection.php',
                 'flux\\lib\\datavalidator' => '/lib/DataValidator.php',

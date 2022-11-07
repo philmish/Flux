@@ -13,8 +13,11 @@ final class SQLiteExecutorTest extends TestCase {
 
     public function testExecScript(): void {
         $script = __DIR__ . '/../_files/sqlite_scriptest.sql';
-        self::$db->execScript($script);
-        self::$db->truncate("test");
+        $scriptResult = self::$db->execScript($script);
+        if (!$scriptResult) {
+            throw new Exception("Script execution failed on SQLite test");
+        }
+        $this->assertTrue($scriptResult == 2);
     }
 }
 
