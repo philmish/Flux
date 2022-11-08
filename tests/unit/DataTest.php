@@ -26,13 +26,16 @@ final class DataTest extends TestCase {
         ];
     }
 
-    public function testCreate():void {
+    public function testInsertQuery():void {
         $data = Data::create(...$this->provideDatafields());
         $table = "test";
         $query = $data->insertQuery($table);
 
         $expectedQuery = "INSERT INTO test (field1, field2) VALUES (?, ?);";
         $this->assertTrue($query->getQuery() == $expectedQuery);
+        $args = $query->getArgs();
+        $this->assertTrue($args[0] == "test");
+        $this->assertTrue($args[1] == 12);
     }
 }
 
