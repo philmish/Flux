@@ -9,6 +9,7 @@ spl_autoload_register(
             $classes = array(
                 'flux\\cli\\app' => '/cli/App.php',
                 'flux\\cli\\command' => '/cli/Commands.php',
+                'flux\\cli\\commandcontext' => '/cli/CommandContext.php',
                 'flux\\cli\\configuration' => '/cli/Configuration.php',
                 'flux\\cli\\driver' => '/cli/Drivers.php',
                 'flux\\cli\\flags' => '/cli/Flags.php',
@@ -17,8 +18,10 @@ spl_autoload_register(
                 'flux\\cmd\\help' => '/cmd/Help.php',
                 'flux\\lib\\data' => '/lib/Data.php',
                 'flux\\lib\\datacollection' => '/lib/DataCollection.php',
+                'flux\\lib\\datafield' => '/lib/DataField.php',
                 'flux\\lib\\datavalidator' => '/lib/DataValidator.php',
                 'flux\\lib\\executor' => '/lib/Executor.php',
+                'flux\\lib\\query' => '/lib/Query.php',
                 'flux\\sqliteexecutor' => '/SQLiteExecutor.php'
             );
         }

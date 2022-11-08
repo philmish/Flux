@@ -3,6 +3,9 @@
 use Flux\SQLiteExecutor;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers Flux\SQLiteExecutor
+ */
 final class SQLiteExecutorTest extends TestCase {
 
     private static SQLiteExecutor $db;
