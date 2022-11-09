@@ -3,6 +3,7 @@
 namespace Flux\cli;
 
 use Exception;
+use Flux\lib\error\FluxException;
 
 final class CommandContext {
     
@@ -32,7 +33,7 @@ final class CommandContext {
         $this->done = true;
     }
 
-    public function addError(Exception $e): void {
+    public function addError(FluxException $e): void {
         array_push($this->errors, $e);
     }
 }

@@ -22,7 +22,10 @@ final class App {
             Help::execute($this->flags);
             return;
         case Command::ExecScript:
-            ExecScript::execute($this->flags, $this->conf->DB());
+            ExecScript::execute(
+                $this->flags,
+                $this->conf->DB()
+            );
             return;
         default:
             Help::execute($this->flags);

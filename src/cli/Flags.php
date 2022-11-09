@@ -2,7 +2,7 @@
 
 namespace Flux\cli;
 
-use Exception;
+use Flux\lib\error\CliException;
 
 final class Flags {
     private Command $command;
@@ -42,12 +42,15 @@ final class Flags {
         return new self($cmd, $table, $file);
     }
 
+    /**
+     * @throws CliException
+     */
     public function get(string $flag): Command|string {
         $res = match ($flag) {
             "cmd", "c", "command" => $this->command,
             "table", "t" => $this->table,
             "file", "f" => $this->file,
-            default => throw new Exception("Unknown flag $flag"),
+            default => throw new CliException("Unknown flag $flag"),
         };
         return $res;
     }

@@ -6,6 +6,7 @@ use Exception;
 use Flux\cmd\Command;
 use Flux\cli\Flags;
 use Flux\cli\Command as CliCommand;
+use Flux\lib\error\CommandException;
 use Flux\lib\Executor;
 
 final class Truncate extends Command {
@@ -15,12 +16,15 @@ final class Truncate extends Command {
             $flags->get("table") != "";
     }
 
+    /**
+     * @throws CommandException
+     */
     public static function execute(Flags $flags, ?Executor $ex = null): void {
         if (!$ex) {
-            throw new Exception("Truncate call misses Executor");
+            throw new CommandException("Truncate call misses Executor");
         }
         if (!Truncate::flagsOK($flags)) {
-            throw new Exception("Invalid Flags for truncate command.");
+            throw new CommandException("Invalid Flags for truncate command.");
         }
 
         $table = $flags->get("table");
