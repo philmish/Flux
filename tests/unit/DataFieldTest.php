@@ -21,6 +21,12 @@ final class DataFieldTest extends TestCase {
         $this->assertTrue($field->getName() == "testField");
         $this->assertTrue($field->getValue() == "Hello World");
     }
+
+    public function testCreateDefault(): void {
+        $field = ["type" => "str", "name" => "testField"];
+        $dataField = DataField::defaultField($field);
+        $this->assertTrue($dataField->hasSameType("Hello World"));
+    }
 }
 
 

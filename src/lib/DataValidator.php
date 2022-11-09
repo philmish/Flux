@@ -8,12 +8,13 @@ final class DataValidator {
        $this->reqKeys = $requiredKeys;
     }
 
-    public function run(array $data): bool {
+    public function validateArray(array $data): array {
+        $missing = [];
         foreach ($this->reqKeys as $key) {
             if (!array_key_exists($key, $data)) {
-                return false;
+                array_push($missing, $key);
             }
         }
-        return true;
+        return $missing;
     }
 }

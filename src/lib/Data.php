@@ -2,7 +2,7 @@
 
 namespace Flux\lib;
 
-use Exception;
+use Flux\lib\error\DataException;
 
 final class Data {
 
@@ -12,12 +12,15 @@ final class Data {
        $this->fields = $fields; 
     }
 
+    /**
+     * @throws DataException
+     */
     static public function create(DataField ...$fields): self {
         $names = [];
         $dataFields = [];
         foreach($fields as $field) {
             if (in_array($field->getName(), $names)) {
-                throw new Exception(
+                throw new DataException(
                     "Datafield with name " . $field->getName() . " already exists."
                 );
             }

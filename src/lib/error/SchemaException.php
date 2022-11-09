@@ -4,9 +4,9 @@ namespace Flux\lib\error;
 
 use Exception;
 
-final class QueryException extends FluxException {
+final class SchemaException extends FluxException {
     
     public function __construct(string $msg, ?Exception $previous = null) {
-        parent::__construct(msg:$msg, module:"Query", code:6, previous:$previous);
+        parent::__construct(msg:$msg, module:"Schema", code:8, previous:$previous);
     }
 }

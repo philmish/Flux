@@ -13,10 +13,10 @@ final class TestValidator extends TestCase {
         $validData = ["hello" => "World", "test" => "test"];
         $invalidData = ["testing" => "invalid", "bye" => "world"];
         $validator = new DataValidator($keys);
-        $valid = $validator->run($validData);
-        $invalid = $validator->run($invalidData);
-        $this->assertTrue($valid);
-        $this->assertFalse($invalid);
+        $valid = $validator->validateArray($validData);
+        $invalid = $validator->validateArray($invalidData);
+        $this->assertTrue(count($valid) == 0);
+        $this->assertTrue(count($invalid) == 2);
     }
 }
 

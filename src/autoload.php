@@ -24,12 +24,15 @@ spl_autoload_register(
                 'flux\\lib\\datavalidator' => '/lib/DataValidator.php',
                 'flux\\lib\\error\\cliexception' => '/lib/error/CliException.php',
                 'flux\\lib\\error\\commandexception' => '/lib/error/CommandException.php',
+                'flux\\lib\\error\\dataexception' => '/lib/error/DataException.php',
+                'flux\\lib\\error\\datafieldexception' => '/lib/error/DataFieldException.php',
                 'flux\\lib\\error\\executorexception' => '/lib/error/ExecutorException.php',
                 'flux\\lib\\error\\fluxexception' => '/lib/error/FluxException.php',
-                'flux\\lib\\error\\queryexception' => '/lib/error/QueryException.php',
+                'flux\\lib\\error\\schemaexception' => '/lib/error/SchemaException.php',
                 'flux\\lib\\error\\validatorexception' => '/lib/error/ValidatorException.php',
                 'flux\\lib\\executor' => '/lib/Executor.php',
                 'flux\\lib\\query' => '/lib/Query.php',
+                'flux\\lib\\schema' => '/lib/Schema.php',
                 'flux\\sqliteexecutor' => '/SQLiteExecutor.php'
             );
         }

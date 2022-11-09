@@ -3,7 +3,6 @@
 namespace Flux\lib;
 
 use PDO;
-use Exception;
 use Flux\lib\error\ExecutorException;
 use PDOException;
 
