@@ -2,10 +2,15 @@
 
 namespace Flux\lib;
 
-abstract class DataCollection {
-    protected array $collection;
+use Flux\lib\error\DataCollectionException;
+use Flux\lib\error\SchemaException;
 
-    protected function __construct(array $data) {
+final class DataCollection {
+    private array $collection;
+    private Schema $schema;
+
+    private function __construct(Schema $schema, array $data) {
+        $this->schema = $schema;
         $this->collection = $data;
     }
 
@@ -13,13 +18,34 @@ abstract class DataCollection {
         return $this->collection;
     }
 
-    static public function fromData(Data ...$data): DataCollection {
+    static public function fromData(Data ...$data, Schema $schema): DataCollection {
         $items = array();
-        array_push($items, $data);
-        return new self($items);
+        array_push($items, ...$data);
+        return new self($schema, $items);
     }
 
-    // Creates a array of data from one or multiple arrays of data. It uses the datafields to
-    // validate the data in each of the arrays in $data.
-    abstract static public function fromArrays(array ...$data, array $datafields): DataCollection;
+    /**
+     * @throws DataCollectionException
+     */
+    static public function fromArrays(Schema $schema, array ...$data): self {
+        $collection = [];
+        foreach ($data as $item) {
+            if (!$schema->fullfilled($item)) {
+                throw new DataCollectionException(
+                    "Data does not fullfill schema of DataCollection"
+                );
+            }
+            try {
+                $row = $schema->newRow($item);
+                $asData = Data::create(...$row);
+                array_push($collection, $asData);
+            } catch (SchemaException $e) {
+                throw new DataCollectionException(
+                    "Invalid data, cant create item in collection.",
+                    previous:$e
+                );
+            }
+        }
+        return new self($schema, ...$collection);
+    }
 }

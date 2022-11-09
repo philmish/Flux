@@ -79,6 +79,35 @@ final class Schema {
         return null;
     }
 
+    /**
+     * @throws SchemaException
+     */
+    public function newRow(array $data): array {
+        if (!$this->fullfilled($data)) {
+            throw new SchemaException("Data does not fullfill schema.");
+        }
+        $row = [];
+        foreach ($data as $k => $v) {
+            $field = $this->getFieldByName($k);
+            if (!$field) {
+                throw new SchemaException(
+                    "Invalid field name $k for Schema of table $this->table."
+                );
+            }
+            try {
+                $newField = $field->copyWithValue($v);
+            } catch (DataFieldException $e) {
+                throw new SchemaException(
+                    "Invalid value $v for field $k in table $this->table",
+                    previous:$e
+                );
+            }
+            array_push($row, $newField);
+        
+        }
+        return $row;
+    }
+
     public function fullfilled(array $data, bool $exclusiv = true): bool {
         $lenData = count($data);
         if ($lenData < count($this->fields)) {
@@ -98,5 +127,9 @@ final class Schema {
             }
             return true;
         }
+    }
+
+    public function hasFieldWithName(string $name): bool {
+        return in_array($name, $this->fieldNames);
     }
 }

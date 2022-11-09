@@ -104,5 +104,19 @@ final class DataField  {
     public function hasSameType(mixed $data): bool {
         return gettype($data) == $this->type;
     }
+
+    public function copyWithValue(mixed $value): DataField {
+        if (!$this->hasSameType($value)) {
+            throw new DataFieldException(
+                "Invalid data type " . gettype($value) . " for field of type $this->type"
+            );
+        }
+        $field = [
+            "type" => $this->type,
+            "name" => $this->name,
+            "value" => $value,
+        ];
+        return DataField::fromArray($field);
+    }
 }
 

@@ -10,6 +10,14 @@ final class SQLiteExecutor extends Executor {
     
     static public function init(string $dsn): Executor {
        $pdo = new PDO("sqlite:" . $dsn) ;
+       $pdo->setAttribute(
+           PDO::ATTR_DEFAULT_FETCH_MODE,
+           PDO::FETCH_ASSOC
+       );
+       $pdo->setAttribute(
+           PDO::ATTR_ERRMODE,
+           PDO::ERRMODE_EXCEPTION
+       );
        return new self($pdo);
     }
 
@@ -23,5 +31,3 @@ final class SQLiteExecutor extends Executor {
         }
     }
 }
-
-

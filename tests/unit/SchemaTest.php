@@ -12,8 +12,14 @@ final class SchemaTest extends TestCase {
 
     public static function setUpBeforeClass(): void {
         $fields = [
-            ["type" => "str", "name" => "testFieldOne"],
-            ["type" => "int", "name" => "testFieldTwo"],
+            [
+                "type" => "str",
+                "name" => "testFieldOne"
+            ],
+            [
+                "type" => "int",
+                "name" => "testFieldTwo"
+            ],
         ];
         $data = [
             "table" => "test",
@@ -25,15 +31,22 @@ final class SchemaTest extends TestCase {
     private function provideFullfill(): array {
         return [
             [
-                "data" => ["testFieldOne" => "Hello", "testFieldTwo" => 12],
+                "data" => [
+                    "testFieldOne" => "Hello",
+                    "testFieldTwo" => 12
+                ],
                 "passes" => true,
             ],
             [
-                "data" => ["testFieldOne" => "WrongType", "testFieldTwo" => "12"],
+                "data" => [
+                    "testFieldOne" => "WrongType",
+                    "testFieldTwo" => "12"
+                ],
                 "passes" => false,
             ],
         ];
     }
+
     public function testFullfilled():void {
         $cases = $this->provideFullfill();
         foreach ($cases as $case) {

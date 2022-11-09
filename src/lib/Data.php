@@ -48,4 +48,12 @@ final class Data {
 
         return Query::Insert($queryStr, $args);
     }
+
+    public function asArray(): array {
+        $data = [];
+        foreach($this->fields as $field) {
+            $data[$field->getName()] = $field->getValue();
+        }
+        return $data;
+    }
 }

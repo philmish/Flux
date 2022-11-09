@@ -24,6 +24,7 @@ spl_autoload_register(
                 'flux\\lib\\datavalidator' => '/lib/DataValidator.php',
                 'flux\\lib\\error\\cliexception' => '/lib/error/CliException.php',
                 'flux\\lib\\error\\commandexception' => '/lib/error/CommandException.php',
+                'flux\\lib\\error\\datacollectionexception' => '/lib/error/DataCollectionException.php',
                 'flux\\lib\\error\\dataexception' => '/lib/error/DataException.php',
                 'flux\\lib\\error\\datafieldexception' => '/lib/error/DataFieldException.php',
                 'flux\\lib\\error\\executorexception' => '/lib/error/ExecutorException.php',

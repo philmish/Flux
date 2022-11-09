@@ -17,4 +17,15 @@ final class DataValidator {
         }
         return $missing;
     }
+
+    public function validateAgainstSchema(Schema $schema, Data ...$data): array {
+        $invalid = [];
+        foreach($data as $row) {
+            $arr = $row->asArray();
+            if (!$schema->fullfilled($arr)) {
+                array_push($invalid, $row);
+            }
+        }
+        return $invalid;
+    }
 }
