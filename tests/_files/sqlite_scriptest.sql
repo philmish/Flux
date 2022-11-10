@@ -1,9 +1,9 @@
 CREATE TABLE `test` (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    topic VARCHAR(25) NOT NULL,
-    msg VARCHAR(50) NOT NULL
+    testStr VARCHAR(25),
+    testNum int NOT NULL
 );
-INSERT INTO test(`topic`, `msg`)
+INSERT INTO test(`testStr`, `testNum`)
 VALUES
-    ("testing", "First test msg"),
-    ("testing", "Second test msg");
+    ("testing", 12),
+    ("test", 34);

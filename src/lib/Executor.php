@@ -38,14 +38,14 @@ abstract class Executor {
                 $query = $item->insertQuery($data->table());
                 $stmt = $this->db->prepare(
                     $query->getQuery(),
-                    $query->getArgs()
                 );
-                $stmt->execute();
+                $stmt->execute($query->getArgs());
+            } catch (PDOException $e) {
             } catch (PDOException $e) {
                 $this->db
                      ->rollBack();
                 throw new ExecutorException(
-                    "Encounterd error executing insert. Rolling back previous inserts.", 
+                    "Encounterd error executing inserting " . $query->getQuery() . " with values " . implode(", ", $query->getArgs()) . ". Rolling back previous inserts.", 
                     previous:$e
                 );
             }
