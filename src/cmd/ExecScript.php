@@ -2,7 +2,6 @@
 
 namespace Flux\cmd;
 
-use Exception;
 use Flux\cmd\Command;
 use Flux\cli\Command as CliCommand;
 use Flux\cli\Flags;

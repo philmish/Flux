@@ -6,6 +6,7 @@ enum Command: string {
 case ExecScript = "execScript";
 case Truncate = "truncate";
 case Help = "help";
+case FeedJSON = "feedJson";
 }
 
 

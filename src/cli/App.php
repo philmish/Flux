@@ -3,6 +3,7 @@
 namespace Flux\cli;
 
 use Flux\cmd\ExecScript;
+use Flux\cmd\FeedJSON;
 use Flux\cmd\Help;
 
 final class App {
@@ -23,6 +24,12 @@ final class App {
             return;
         case Command::ExecScript:
             ExecScript::execute(
+                $this->flags,
+                $this->conf->DB()
+            );
+            return;
+        case Command::FeedJSON:
+            FeedJSON::execute(
                 $this->flags,
                 $this->conf->DB()
             );
