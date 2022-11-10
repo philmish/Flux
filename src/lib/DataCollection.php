@@ -52,4 +52,9 @@ final class DataCollection {
         }
         return new self($schema, $collection);
     }
+
+    public function table(): string {
+        return $this->schema
+                    ->tableName(); 
+    }
 }

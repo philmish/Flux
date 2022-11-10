@@ -132,4 +132,8 @@ final class Schema {
     public function hasFieldWithName(string $name): bool {
         return in_array($name, $this->fieldNames);
     }
+
+    public function tableName(): string {
+        return $this->table;
+    }
 }

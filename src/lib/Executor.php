@@ -18,7 +18,7 @@ abstract class Executor {
     /**
      * @throws ExecutorException
      */
-    public function feed(DataCollection $data, string $table): void {
+    public function feed(DataCollection $data): void {
         try {
             $tr = $this->db->beginTransaction();
         } catch (PDOException $e) {
@@ -30,10 +30,12 @@ abstract class Executor {
         foreach ($data->data() as $item) {
             if (!$item instanceof Data) {
                 $this->db->rollBack();
-                throw new ExecutorException("Unexpected data type. Rolling back previous inserts.");
+                throw new ExecutorException(
+                    "Unexpected data type. Rolling back previous inserts."
+                );
             }
             try {
-                $query = $item->insertQuery($table);
+                $query = $item->insertQuery($data->table());
                 $stmt = $this->db->prepare(
                     $query->getQuery(),
                     $query->getArgs()
