@@ -14,6 +14,7 @@ spl_autoload_register(
                 'flux\\cli\\driver' => '/cli/Drivers.php',
                 'flux\\cli\\escapecolor' => '/cli/EscapeColor.php',
                 'flux\\cli\\flags' => '/cli/Flags.php',
+                'flux\\cli\\fs\\collectionloader' => '/cli/fs/CollectionLoader.php',
                 'flux\\cmd\\command' => '/cmd/Command.php',
                 'flux\\cmd\\execscript' => '/cmd/ExecScript.php',
                 'flux\\cmd\\help' => '/cmd/Help.php',

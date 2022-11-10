@@ -18,7 +18,11 @@ final class DataCollection {
         return $this->collection;
     }
 
-    static public function fromData(Data ...$data, Schema $schema): DataCollection {
+    public function containsField(string $name): bool {
+        return $this->schema->hasFieldWithName($name);
+    }
+
+    static public function fromData(Schema $schema, Data ...$data): DataCollection {
         $items = array();
         array_push($items, ...$data);
         return new self($schema, $items);
@@ -46,6 +50,6 @@ final class DataCollection {
                 );
             }
         }
-        return new self($schema, ...$collection);
+        return new self($schema, $collection);
     }
 }

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class TestValidator extends TestCase {
 
-    public function testValidation():void {
+    public function testKeyValidation():void {
         $keys = ["hello", "test"];
         $validData = ["hello" => "World", "test" => "test"];
         $invalidData = ["testing" => "invalid", "bye" => "world"];

@@ -1,0 +1,13 @@
+{
+    "table": "test",
+    "fields": [
+        {"type": "str", "name": "testStr"},
+        {"type": "int", "name": "testNum"}
+    ],
+    "data": [
+        {"testStr": "Hello", "testNum": 1},
+        {"testStr": "H3lL0", "testNum": 2},
+        {"testStr": "W0rLd", "testNum": 3},
+        {"testStr": "World", "testNum": 4}
+    ]
+}
