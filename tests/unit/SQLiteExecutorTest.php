@@ -33,7 +33,8 @@ final class SQLiteExecutorTest extends TestCase {
         $json = self::$files . "feed_test.json";
         $data = CollectionLoader::jsonLoad($json);
         $this->assertTrue($data->table() == "test");
-        self::$db->feed($data);
+        $writtenRows = self::$db->feed($data);
+        $this->assertTrue($writtenRows == 4);
     }
 }
 

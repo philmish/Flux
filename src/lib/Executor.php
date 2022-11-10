@@ -18,7 +18,7 @@ abstract class Executor {
     /**
      * @throws ExecutorException
      */
-    public function feed(DataCollection $data): void {
+    public function feed(DataCollection $data): int {
         try {
             $tr = $this->db->beginTransaction();
         } catch (PDOException $e) {
@@ -27,6 +27,7 @@ abstract class Executor {
         if (!$tr) {
             throw new ExecutorException("No transaction was initialized.");
         }
+        $writtenRows = 0;
         foreach ($data->data() as $item) {
             if (!$item instanceof Data) {
                 $this->db->rollBack();
@@ -40,7 +41,7 @@ abstract class Executor {
                     $query->getQuery(),
                 );
                 $stmt->execute($query->getArgs());
-            } catch (PDOException $e) {
+                $writtenRows += 1;
             } catch (PDOException $e) {
                 $this->db
                      ->rollBack();
@@ -51,6 +52,7 @@ abstract class Executor {
             }
         }
         $this->db->commit();
+        return $writtenRows;
     }
 
     /**
