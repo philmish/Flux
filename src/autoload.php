@@ -17,6 +17,7 @@ spl_autoload_register(
                 'flux\\cli\\fs\\collectionloader' => '/cli/fs/CollectionLoader.php',
                 'flux\\cmd\\command' => '/cmd/Command.php',
                 'flux\\cmd\\execscript' => '/cmd/ExecScript.php',
+                'flux\\cmd\\feedjson' => '/cmd/FeedJSON.php',
                 'flux\\cmd\\help' => '/cmd/Help.php',
                 'flux\\cmd\\truncate' => '/cmd/Truncate.php',
                 'flux\\lib\\data' => '/lib/Data.php',
@@ -30,11 +31,18 @@ spl_autoload_register(
                 'flux\\lib\\error\\datafieldexception' => '/lib/error/DataFieldException.php',
                 'flux\\lib\\error\\executorexception' => '/lib/error/ExecutorException.php',
                 'flux\\lib\\error\\fluxexception' => '/lib/error/FluxException.php',
+                'flux\\lib\\error\\fsexception' => '/lib/error/FSException.php',
                 'flux\\lib\\error\\schemaexception' => '/lib/error/SchemaException.php',
                 'flux\\lib\\error\\validatorexception' => '/lib/error/ValidatorException.php',
                 'flux\\lib\\executor' => '/lib/Executor.php',
                 'flux\\lib\\query' => '/lib/Query.php',
                 'flux\\lib\\schema' => '/lib/Schema.php',
+                'flux\\scan\\scan' => '/scan/Scan.php',
+                'flux\\scan\\scancontext' => '/scan/ScanContext.php',
+                'flux\\scan\\scanname' => '/scan/ScanName.php',
+                'flux\\scan\\scanner' => '/scan/Scanner.php',
+                'flux\\scan\\table\\basetablescan' => '/scan/table/BaseTableScan.php',
+                'flux\\scan\\table\\tablescancontext' => '/scan/table/TableScanContext.php',
                 'flux\\sqliteexecutor' => '/SQLiteExecutor.php'
             );
         }

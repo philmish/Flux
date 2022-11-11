@@ -54,4 +54,19 @@ final class Flags {
         };
         return $res;
     }
+
+    public function getArgs(array $keys): array {
+        $found = [];
+        $missing = [];
+        foreach ($keys as $key) {
+            try {
+                $arg = $this->get($key);
+                $found[$key] = $arg;
+            } catch (CliException) {
+                array_push($missing, $key);
+            }
+        }
+        $result = ["missing" => $missing, "args" => $found];
+        return $result;
+    }
 }

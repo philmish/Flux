@@ -24,6 +24,7 @@ final class SQLiteExecutorTest extends TestCase {
             throw new Exception("Script execution failed on SQLite test");
         }
         $this->assertTrue($scriptResult == 2);
+        $this->assertTrue(self::$db->countTableRows('test') == 2);
     }
 
     /**
@@ -33,8 +34,10 @@ final class SQLiteExecutorTest extends TestCase {
         $json = self::$files . "feed_test.json";
         $data = CollectionLoader::jsonLoad($json);
         $this->assertTrue($data->table() == "test");
+        $this->asserttrue(self::$db->countTableRows("test") == 2);
         $writtenRows = self::$db->feed($data);
         $this->assertTrue($writtenRows == 4);
+        $this->asserttrue(self::$db->countTableRows("test") == 6);
     }
 }
 

@@ -81,4 +81,23 @@ abstract class Executor {
         }
         return $result;
     }
+
+    /**
+     * @throws ExecutorException
+     */
+    public function countTableRows(string $tableName): int {
+        $query = "SELECT COUNT(*) as row_count FROM $tableName";
+        try {
+            $result = $this->db->query($query)->fetchAll();
+        } catch (PDOException $e) {
+            throw new ExecutorException(
+                "Database exception while counting rows of table $tableName",
+                previous:$e
+            );
+        }
+        if (!$result || !array_key_exists("row_count", $result[0])) {
+            throw new ExecutorException("No result from counting rows of table $tableName");
+        }
+        return $result[0]['row_count'];
+    }
 }
