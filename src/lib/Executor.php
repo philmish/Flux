@@ -4,6 +4,7 @@ namespace Flux\lib;
 
 use PDO;
 use Flux\lib\error\ExecutorException;
+use Flux\lib\error\SchemaException;
 use PDOException;
 
 abstract class Executor {
@@ -13,10 +14,19 @@ abstract class Executor {
         $this->db = $db;
     }
 
+    /**
+     * @param string $dsn Data Source Name for Database
+     *
+     * @return Executor Initialized Executor
+     */
     abstract static public function init(string $dsn): Executor;
 
     /**
      * @throws ExecutorException
+     *
+     * @param DataCollection
+     *
+     * @return int Returns the amount of inserted rows as an int
      */
     public function feed(DataCollection $data): int {
         try {
@@ -57,6 +67,8 @@ abstract class Executor {
 
     /**
      * @throws ExecutorException
+     *
+     * @param string Name of the table to truncate
      */
     public function truncate(string $table): void {
         $result = $this->db
@@ -69,6 +81,10 @@ abstract class Executor {
 
     /**
      * @throws ExecutorException
+     *
+     * @param string $source Path to script to run
+     *
+     * @return int Amount of affected rows
      */
     public function execScript(string $source): int { 
         $sql = file_get_contents($source);
@@ -84,6 +100,10 @@ abstract class Executor {
 
     /**
      * @throws ExecutorException
+     *
+     * @param string $tableName Name of the table to count rows in
+     *
+     * @return int Amount of rows in specified table
      */
     public function countTableRows(string $tableName): int {
         $query = "SELECT COUNT(*) as row_count FROM $tableName";
@@ -99,5 +119,42 @@ abstract class Executor {
             throw new ExecutorException("No result from counting rows of table $tableName");
         }
         return $result[0]['row_count'];
+    }
+
+    /**
+     * @throws ExecutorException
+     *
+     * @param string $tableName Name of the table to get the Schema of
+     *
+     * @return Schema
+     *
+     */
+    public function getTableSchema(string $tableName): Schema {
+        $query = "SELECT * FROM $tableName LIMIT 1;";
+        try {
+            $result = $this->db->query($query)->fetch();
+        } catch (PDOException $e) {
+            throw new ExecutorException(
+                "Failed to read entry from $tableName to determine Schema.",
+                previous:$e
+            );
+        }
+        if (!$result || count($result) == 0) {
+            throw new ExecutorException(
+                "No result from querying $tableName to determine Schema."
+            );
+        }
+        $data = [
+            "table" => $tableName,
+            "fields" => $result,
+        ];
+        try {
+            return Schema::fromArray($data);
+        } catch (SchemaException $e) {
+            throw new ExecutorException(
+                "Failed to initialize Schema for $tableName from " . implode(", ", $data["fields"]),
+                previous:$e
+            );
+        }
     }
 }

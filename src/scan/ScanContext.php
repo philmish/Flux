@@ -16,6 +16,12 @@ abstract class ScanContext {
         $this->report = $report;
     }
 
+    protected static function UnknownScan(): self {
+        $ctx = new self([], ScanName::Unknown);
+        $ctx->failed();
+        return $ctx;
+    }
+
     public function set(string $key, mixed $value): void {
         $this->report[$key] = $value;
     }
@@ -40,6 +46,10 @@ abstract class ScanContext {
     public function succeeded(): void {
         $this->success = true;
         $this->isDone();
+    }
+
+    public function report(): array {
+        return $this->report;
     }
 
     abstract static public function Create(ScanName $scan): ScanContext;

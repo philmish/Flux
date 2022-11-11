@@ -15,12 +15,6 @@ final class TableScanContext extends ScanContext {
         ];
     }
 
-    private static function UnknownScan(): self {
-        $ctx = new self([], ScanName::Unknown);
-        $ctx->failed();
-        return $ctx;
-    }
-
     public static function Create(ScanName $scan): self {
         $ctx = match ($scan) {
         ScanName::BaseTableScan => new TableScanContext(
