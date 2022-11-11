@@ -9,13 +9,14 @@ use Flux\cli\EscapeColor;
 final class Help extends Command {
 
     private function head(): string {
-        return "Flux - SQL quickly";
+        return "\t\tFlux - SQL quickly";
     }
 
     private function commands(): string {
         $cmds = "";
-        $cmds .= "SQL script execution - execScript\n";
-        $cmds .= "Truncating tables - truncate\n";
+        $cmds .= "SQL script execution\n";
+        $cmds .= "Truncating tables\n";
+        $cmds .= "Insert data from JSON files\n";
         return EscapeColor::green($cmds);
     }
     

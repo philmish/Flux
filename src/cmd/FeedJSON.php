@@ -9,6 +9,7 @@ use Flux\lib\error\CliException;
 use Flux\lib\Executor;
 use Flux\lib\error\CommandException;
 use Flux\lib\error\ExecutorException;
+use Flux\lib\error\FSException;
 
 final class FeedJSON extends Command {
     
@@ -25,12 +26,14 @@ final class FeedJSON extends Command {
             throw new CommandException("FeedJSON requires a Executor.");
         }
         if (!FeedJSON::flagsOK($flags)) {
-            throw new CommandException("Invalid flags provided to ExecScript.");
+            throw new CommandException(
+                "Invalid flags provided to ExecScript."
+            );
         }
         $src = $flags->get("file");
         try {
             $collection = CollectionLoader::jsonLoad($src);
-        } catch (CliException $e) {
+        } catch (FSException $e) {
             throw new CommandException(
                 "Failed to load data for FeedJSON from file.",
                 previous:$e,

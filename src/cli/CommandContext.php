@@ -2,7 +2,6 @@
 
 namespace Flux\cli;
 
-use Exception;
 use Flux\lib\error\FluxException;
 
 final class CommandContext {
@@ -30,6 +29,11 @@ final class CommandContext {
 
     public function succeeded(): void {
         $this->success = true;
+        $this->done = true;
+    }
+
+    public function failed(): void {
+        $this->success = false;
         $this->done = true;
     }
 
