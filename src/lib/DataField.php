@@ -49,6 +49,11 @@ final class DataField  {
         return DataField::Create($data['type'], $data['name'], $data['value']);
     }
 
+    static public function fromKeyValue(mixed $key, mixed $value): self {
+        $type = gettype($value);
+        return DataField::Create($type, $key, $value);
+    }
+
     /**
      * @throws DataFieldException
      *

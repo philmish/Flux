@@ -35,6 +35,10 @@ abstract class ScanContext {
         $this->done = true;
     }
 
+    public function success(): bool {
+        return $this->success;
+    }
+
     public function done(): bool {
         return $this->done;
     }
@@ -53,24 +57,7 @@ abstract class ScanContext {
         return $this->report;
     }
 
-    public function printReport(): void {
-        $msg = "Scan: " . $this->scanName->value . "\n";
-        $status = $this->success ? EscapeColor::green("Status: Success") : EscapeColor::boldRed("Status: Failed");
-        $msg .= $status . "\n";
-        foreach($this->report() as $k => $v) {
-            $val = match(gettype($v)) {
-                "integer" => "$v",
-                "array" => implode(", ", $v),
-                default => $v,
-            };
-            $msg .= $k . ": " . $val;
-        }
-        $msg .= "Errors: \n";
-        foreach($this->errors as $err) {
-            $msg .= "\t" . $err->getMessage() . "\n";
-        }
-        echo $msg;
-    }
+    abstract public function printReport(): void;
 
     abstract static public function Create(ScanName $scan): ScanContext;
 }

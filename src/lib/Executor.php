@@ -144,9 +144,14 @@ abstract class Executor {
                 "No result from querying $tableName to determine Schema."
             );
         }
+        $fields = [];
+        foreach($result as $k => $v) {
+            $d = ["name" => $k, "type" => gettype($v)];
+            $fields[] = $d;
+        }
         $data = [
             "table" => $tableName,
-            "fields" => $result,
+            "fields" => $fields,
         ];
         try {
             return Schema::fromArray($data);

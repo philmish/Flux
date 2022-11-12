@@ -48,7 +48,7 @@ final class BaseTableScan extends Scan {
             return $ctx;
         }
         try {
-            $ctx->set("schema", $db->getTableSchema($args["table"]));
+            $ctx->set("schema", $db->getTableSchema($args["table"])->getFields());
         } catch (ExecutorException $e) {
             $err = new ScanException(
                 "BaseTableScan failed to retrieve schema from " . $args["table"],

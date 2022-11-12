@@ -30,6 +30,18 @@ final class Schema {
     }
 
     /**
+     * Public constructor. Creates a Schema from a table name and one or more DataFields.
+     *
+     * @param string $table Name of the Table.
+     * @param DataField ...$fields One or more DataFields forming the schema.
+     *
+     * @return Schema
+     */
+    static public function Create(string $table, DataField ...$fields): self {
+        return new self($table, ...$fields);
+    }
+
+    /**
      * @throws SchemaException
      *
      * @param array $data
@@ -49,6 +61,7 @@ final class Schema {
      }
 
     /**
+     * @param array{"table": string, "fields": array<array{"type": string, "name": string}>} $data
      * @throws SchemaException
      */
     public static function fromArray(array $data): self {
@@ -155,6 +168,13 @@ final class Schema {
         }
     }
 
+    /**
+     * Checks if a field with the given name exists in the Schema.
+     *
+     * @param string $name Name of the DataField.
+     *
+     * @return bool Indicator if a DataField with the given name exists..
+     */
     public function hasFieldWithName(string $name): bool {
         return in_array($name, $this->fieldNames);
     }
@@ -175,10 +195,20 @@ final class Schema {
         return false;
     }
 
+    /**
+     * Getter function for the table name of the Schema.
+     *
+     * @return string Name of the table.
+     */
     public function tableName(): string {
         return $this->table;
     }
 
+    /**
+     * Getter function for the field names of the Schema.
+     *
+     * @return array<string> Names of the DataFields of the Schema.
+     */
     public function fieldNames(): array {
         return $this->fieldNames;
     }

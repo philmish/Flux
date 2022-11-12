@@ -2,6 +2,7 @@
 
 namespace Flux\scan\table;
 
+use Flux\cli\EscapeColor;
 use Flux\scan\ScanContext;
 use Flux\scan\ScanName;
 
@@ -23,5 +24,15 @@ final class TableScanContext extends ScanContext {
         default => TableScanContext::UnknownScan(),
         };
         return $ctx;
+    }
+
+    public function printReport(): void {
+        echo "Table: " . $this->report["table"] . "\n";
+        echo "Length: " . $this->report["length"] . "\n";
+        foreach($this->report["schema"] as $field) {
+            echo $field->getName() . ": " . $field->type() . "\n";
+        }
+        $status = $this->success() ? EscapeColor::green("Status: Success") : EscapeColor::red("Status: Failed");
+        echo $status;
     }
 }
