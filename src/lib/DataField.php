@@ -30,6 +30,10 @@ final class DataField  {
 
     /**
      * @throws DataFieldException
+     *
+     * @param array{"name": string, "type": string, "value": mixed} $data Data to use for the creation of the field.
+     *
+     * @return DataField
      */
     public static function fromArray(array $data): self {
         $keys = ["name", "type", "value"];
@@ -47,6 +51,10 @@ final class DataField  {
 
     /**
      * @throws DataFieldException
+     *
+     * @param array{"type": string, "name": string} Type and Name of the field.
+     *
+     * @return DataField
      */
     public static function defaultField(array $data): self {
         $keys = ["type", "name"];
@@ -103,6 +111,14 @@ final class DataField  {
 
     public function hasSameType(mixed $data): bool {
         return gettype($data) == $this->type;
+    }
+
+    public function isSameField(DataField $field): bool {
+        return $this->name == $field->getName() && $this->type == $field->type();
+    }
+
+    public function isSameFieldAndValue(DataField $field): bool {
+        return $this->isSameField($field) && $this->value == $field->getValue();
     }
 
     public function copyWithValue(mixed $value): DataField {

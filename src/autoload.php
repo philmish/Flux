@@ -20,6 +20,7 @@ spl_autoload_register(
                 'flux\\cmd\\execscript' => '/cmd/ExecScript.php',
                 'flux\\cmd\\feedjson' => '/cmd/FeedJSON.php',
                 'flux\\cmd\\help' => '/cmd/Help.php',
+                'flux\\cmd\\scan' => '/cmd/Scan.php',
                 'flux\\cmd\\truncate' => '/cmd/Truncate.php',
                 'flux\\lib\\data' => '/lib/Data.php',
                 'flux\\lib\\datacollection' => '/lib/DataCollection.php',

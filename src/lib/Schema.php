@@ -31,6 +31,10 @@ final class Schema {
 
     /**
      * @throws SchemaException
+     *
+     * @param array $data
+     *
+     * @return DataField
      */
     private static function genField(array $data): DataField {
         try {
@@ -70,6 +74,13 @@ final class Schema {
         return new Schema($data['table'], ...$schemaFields);
     }
 
+    /**
+     * Retrieves a datafield from the schema deffinition by name.
+     *
+     * @param string $name Name of the DataField to retrieve.
+     *
+     * @return ?DataField Returns the DataField with the provided name or null when none is found.
+     */
     private function getFieldByName(string $name): ?DataField {
         foreach ($this->fields as $field) {
             if ($field->getName() == $name) {
@@ -81,6 +92,12 @@ final class Schema {
 
     /**
      * @throws SchemaException
+     *
+     * Tries to create a new Row of data according to the Schema's DataFields
+     *
+     * @param array $data Data to be transformed into DataFields.
+     *
+     * @return array<DataField> Array of DataFields
      */
     public function newRow(array $data): array {
         if (!$this->fullfilled($data)) {
@@ -108,6 +125,15 @@ final class Schema {
         return $row;
     }
 
+    /**
+     * Takes an array and checks if the keys are present in the Schema and if the type
+     * of the Field's Data field matches the value in the provided array.
+     * 
+     * @param array $data
+     * @param bool $exclusiv=true Should the Data only consist of the Field's of this Schema.
+     *
+     * @return bool Indicates if the provided $data fullfills the Schema.
+     */
     public function fullfilled(array $data, bool $exclusiv = true): bool {
         $lenData = count($data);
         if ($lenData < count($this->fields)) {
@@ -133,7 +159,59 @@ final class Schema {
         return in_array($name, $this->fieldNames);
     }
 
+    /**
+     * Checks if the provided DataField exists in the Schema.
+     *
+     * @param DataField $field
+     *
+     * @return bool Indicator if the DataField exists in the Schema.
+     */
+    public function hasField(DataField $field): bool {
+        foreach($this->fields as $f) {
+            if ($field->isSameField($f)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function tableName(): string {
         return $this->table;
+    }
+
+    public function fieldNames(): array {
+        return $this->fieldNames;
+    }
+
+    /**
+     * Getter function for the DataFields of the Schema.
+     *
+     * @return array<DataField>
+     */
+    public function getFields(): array {
+        return $this->fields;
+    }
+
+    /**
+     * Compares this Schema with the provided one for equlity.
+     *
+     * @param Schema $schema
+     *
+     * @return bool Indicator if both Schemas are equal.
+     */
+    public function isEqualTo(Schema $schema): bool {
+        if ($this->tableName() != $schema->tableName()) {
+            return false;
+        }
+        $fields = $schema->getFields();
+        if (count($this->fields) != count($fields)) {
+            return false;
+        }
+        foreach($this->fields as $field) {
+            if (!$schema->hasField($field)) {
+                return false;
+            } 
+        }
+        return true;
     }
 }

@@ -27,6 +27,17 @@ final class DataFieldTest extends TestCase {
         $dataField = DataField::defaultField($field);
         $this->assertTrue($dataField->hasSameType("Hello World"));
     }
+
+    public function testIsSameField(): void {
+        $testCases = [
+            ["matches" => true, "field" => DataField::Create("string", "testStr", "Hello World")],
+            ["matches" => false, "field" => DataField::Create("integer", "testStr", 12)],
+        ];
+        $field = DataField::Create("string", "testStr", "Hello World");
+        foreach ($testCases as $case) {
+            $this->assertTrue($case["matches"] == $field->isSameField($case["field"]));
+        }
+    }
 }
 
 

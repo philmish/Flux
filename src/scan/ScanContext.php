@@ -3,6 +3,7 @@
 namespace Flux\scan;
 
 use Exception;
+use Flux\cli\EscapeColor;
 
 abstract class ScanContext {
     protected ScanName $scanName;
@@ -50,6 +51,25 @@ abstract class ScanContext {
 
     public function report(): array {
         return $this->report;
+    }
+
+    public function printReport(): void {
+        $msg = "Scan: " . $this->scanName->value . "\n";
+        $status = $this->success ? EscapeColor::green("Status: Success") : EscapeColor::boldRed("Status: Failed");
+        $msg .= $status . "\n";
+        foreach($this->report() as $k => $v) {
+            $val = match(gettype($v)) {
+                "integer" => "$v",
+                "array" => implode(", ", $v),
+                default => $v,
+            };
+            $msg .= $k . ": " . $val;
+        }
+        $msg .= "Errors: \n";
+        foreach($this->errors as $err) {
+            $msg .= "\t" . $err->getMessage() . "\n";
+        }
+        echo $msg;
     }
 
     abstract static public function Create(ScanName $scan): ScanContext;
