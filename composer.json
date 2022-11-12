@@ -1,0 +1,17 @@
+{
+    "name": "philmish/flux",
+    "description": "CLI utility for interacting and scanning SQL Databases.",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "vimeo/psalm": "^4.30"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "philmish",
+            "email": "thantalosdream@protonmail.com"
+        }
+    ],
+    "require": {}
+}
