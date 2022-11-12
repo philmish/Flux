@@ -13,5 +13,8 @@
             "email": "thantalosdream@protonmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
 }
