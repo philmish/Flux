@@ -7,11 +7,12 @@ use PDO;
 use Flux\lib\error\ExecutorException;
 use PDOException;
 
-final class SQLiteExecutor extends Executor {
+final class MariaDBExecutor extends Executor {
     
     static public function init(string $dsn): Executor {
+        //DSN Format: mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx
         try {
-            $pdo = new PDO("sqlite:" . $dsn) ;
+            $pdo = new PDO("mysql:" . $dsn) ;
             $pdo->setAttribute(
                 PDO::ATTR_DEFAULT_FETCH_MODE,
                 PDO::FETCH_ASSOC
@@ -21,18 +22,9 @@ final class SQLiteExecutor extends Executor {
                 PDO::ERRMODE_EXCEPTION
             );
         } catch (PDOException $e) {
-            throw new ExecutorException("Failed to connect to SQLite DB.", previous:$e);
+            throw new ExecutorException("Failed to connect to maria db.", previous: $e);
         }
        return new self($pdo);
     }
-
-    /**
-     * @throws ExecutorException
-     */
-    public function truncate(string $table): void {
-        $result = $this->db->prepare("DELETE FROM $table")->execute();
-        if (!$result) {
-            throw new ExecutorException("Failed to truncate $table");
-        }
-    }
 }
+

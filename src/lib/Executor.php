@@ -15,6 +15,8 @@ abstract class Executor {
     }
 
     /**
+     * @throws ExecutorException
+     *
      * @param string $dsn Data Source Name for Database
      *
      * @return Executor Initialized Executor
@@ -130,9 +132,10 @@ abstract class Executor {
      *
      */
     public function getTableSchema(string $tableName): Schema {
+        // TODO Implement fetching native type from fields
         $query = "SELECT * FROM $tableName LIMIT 1;";
         try {
-            $result = $this->db->query($query)->fetch();
+            $result = $this->db->query($query)->fetch(); 
         } catch (PDOException $e) {
             throw new ExecutorException(
                 "Failed to read entry from $tableName to determine Schema.",
