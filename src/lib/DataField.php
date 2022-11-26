@@ -9,23 +9,25 @@ final class DataField  {
     private string $type;
     private string $name;
     private mixed $value;
+    private string $nativeType;
 
-    private function __construct(string $type, string $name, mixed $value) {
+    private function __construct(string $type, string $name, mixed $value, string $nativeType) {
         $this->type = $type;
         $this->name = $name;
         $this->value = $value;
+        $this->nativeType = $nativeType;
     }
  
     /**
      * @throws DataFieldException
      */
-    public static function Create(string $type, string $name, mixed $value): self {
+    public static function Create(string $type, string $name, mixed $value, string $nativeType = ""): self {
         if (gettype($value) != $type) {
             throw new DataFieldException(
                 "Failed to create data field. Expected type $type found " . gettype($value)
             );
         }
-        return new self($type, $name, $value);
+        return new self($type, $name, $value, $nativeType);
     }
 
     /**
@@ -46,7 +48,8 @@ final class DataField  {
             }
             throw new DataFieldException($msg);
         };
-        return DataField::Create($data['type'], $data['name'], $data['value']);
+        array_key_exists("nativeType", $data) ?: $data['nativeType'] = "";
+        return DataField::Create($data['type'], $data['name'], $data['value'], $data['nativeType']);
     }
 
     static public function fromKeyValue(mixed $key, mixed $value): self {
@@ -99,6 +102,7 @@ final class DataField  {
                 "Failed to initialize default field. Unsupported type " . $data["type"]
             );
         }
+        $data['nativeType'] = "";
         return DataField::fromArray($data);
     }
 
@@ -114,8 +118,16 @@ final class DataField  {
        return $this->value; 
     }
 
+    public function getNativeType(): string {
+        return $this->nativeType;
+    }
+
     public function hasSameType(mixed $data): bool {
         return gettype($data) == $this->type;
+    }
+
+    public function hasSameNativeType(DataField $field): bool {
+        return $this->nativeType == $field->getNativeType();
     }
 
     public function isSameField(DataField $field): bool {

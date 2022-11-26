@@ -16,6 +16,14 @@ final class TableScanContext extends ScanContext {
         ];
     }
 
+    private static function TableHasSchemaReport(): array {
+        return [
+            "tableSchema" => [],
+            "compareSchema" => [],
+            "matches" => false,
+        ];
+    }
+
     public static function Create(ScanName $scan): self {
         $ctx = match ($scan) {
         ScanName::BaseTableScan => new TableScanContext(
